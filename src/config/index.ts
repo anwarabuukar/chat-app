@@ -1,6 +1,6 @@
 
+export const serverPort = process.env.PORT;
 export  const mongoconfig = process.env.MONGODB_CONNECTION_STRING
-export const serverport = process.env.PORT 
-export const jwtsectret = process.env.JWT_SECRET
-export const jwtaudience = process.env.JWT_AUDIENCE
-export const jwtissuer = process.env.JWT_ISSUER
+export const jwtSecret = process.env.JWT_SECRET
+export const jwtAudience = process.env.JWT_AUDIENCE
+export const jwtIssuer = process.env.JWT_ISSUER
