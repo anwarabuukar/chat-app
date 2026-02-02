@@ -6,10 +6,10 @@ router.get("/helo", (req, res) => {
 });
 
 router.post("/login", (req, res) => {
-  return;
+  return
 });
 
 router.post("/register", (req, res) => {
-  return;
+  return res.json();
 });
 export { router as rootRouter };
