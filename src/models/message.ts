@@ -22,5 +22,4 @@ const messageschema = new Schema({
   ],
 });
 
-
 export default model(MESSAGE_MODEL, messageschema);

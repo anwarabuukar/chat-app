@@ -8,6 +8,7 @@ const userschema = new Schema({
   username: {
     type: String,
     required: true,
+    unique: true,
 
   },
   password: {
@@ -17,6 +18,7 @@ const userschema = new Schema({
   email: {
     type: String,
     required: true,
+    unique: true,
   },
   verified: {
     type: Boolean,
