@@ -1,17 +1,17 @@
 
-// import { resolve } from "node:dns";
-import { rejects } from "assert";
+
+
 import app from "../server.js";
-import { serverPort,mongoDbconnString  } from "./config/index.js";
+import { serverPort,mongoDbconnString, databaseName  } from "./config/index.js";
 import mongoose from "mongoose"
-import { error } from "console";
-
-
-// import { rejects } from "node:assert";
+ 
 
 
 const setupserver = ()=>new Promise(async(resolve,rejects)=>{
-await mongoose.connect(mongoDbconnString) 
+await mongoose.connect(mongoDbconnString,{
+  dbName: databaseName
+
+}) 
 
 app.listen(serverPort, (err) => {
   if(err) return rejects(err);

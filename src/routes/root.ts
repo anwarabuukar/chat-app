@@ -14,7 +14,10 @@ if(!req.body.username || !req.body.password){
    return  res.status(400).json("Username and password are required");
 }
 const User  =  await user.findOne({username: req.body.username});
-if(!User){ return res.status(400).json("connot log in  you need to register first")
+if (!User) {
+  return res.status(400).json("connot log in  you need to register first");
+}
+
 
 if(User.password !==  req.body.password){
   return res.status(400).json("cnnot log you in please  your details  and try again")
@@ -27,7 +30,7 @@ const token = jwt.sign({username: User.username}, jwtSecret,{
 });
 return res.json({token})
 
-}}
+}
 );
 
 router.post("/register", async  (req, res) => {
