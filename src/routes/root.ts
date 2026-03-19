@@ -19,7 +19,7 @@ if (!User) {
 }
 
 
-if(User.password !==  req.body.password){
+if(!await User.isPasswordMaching(req.body.password)){
   return res.status(400).json("cnnot log you in please  your details  and try again")
 }
 const token = jwt.sign({username: User.username}, jwtSecret,{
@@ -33,24 +33,26 @@ return res.json({token})
 }
 );
 
-router.post("/register", async  (req, res) => {
-  const User = await user.findOne().or([{username: req.body.username}, {email: req.body.email}])
-  if(user){
-    return res.status(400).json("connot register you")
+router.post("/register", async (req, res) => {
+
+  const User = await user.findOne().or([ { username: req.body.username },{ email: req.body.email }]);
+  if (User) {
+    return res.status(400).json("cannot register you");
   }
-const newUser = new user(req.body);
-await  newUser.validate();
-await newUser.save();
+  const newUser = new user(req.body);
+  await newUser.validate();
+  await newUser.save();
+  const token = jwt.sign(
+    { username: newUser.username },
+    jwtSecret,
+    {
+      audience: jwtAudience,
+      issuer: jwtIssuer,
+      subject: newUser._id.toString()
+    }
+  );
 
-const token = jwt.sign({username: newUser.username}, jwtSecret,{
-
-  audience: jwtAudience,
-  issuer: jwtIssuer,
-  subject: newUser._id.toString()
-})
-
-res.json({token})
+  res.json({ token });
 });
-
 
 export { router as rootRouter };
