@@ -14,7 +14,8 @@ const chatshema = new Schema({
     },
     status:{
         type: String,
-        enum: Object.values(CHAT_STATUS)
+        enum: Object.values(CHAT_STATUS),
+        default: CHAT_STATUS.ACTIVE
     },
     members:[{
         type: Types.ObjectId,
