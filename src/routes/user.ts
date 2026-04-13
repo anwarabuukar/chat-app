@@ -1,23 +1,20 @@
 import { Router } from 'express';
 import { authmiddleware } from '../middleware/outhentication';
+import User from "../models/user"
 
 const router = Router()
 router.use(authmiddleware);
 
-const all = router.route('/');
 
-all.get((req, res) => {
-  res.json([])
-});
+const one = router.route('/:userId');
+one.get(async (req, res) => {
+const userId = req.params.userId
+if(req.payload.sub  !== userId){
+  return res.status(403).json("cannot fulfill your request")
+}
+const user = await User.findById(userId).select("-friends -chats")
+res.json(user)
 
-all.post((req, res) => {
- res.json([])
-});
-
-
-const one = router.route('/:id');
-one.get((req, res) => {
-  res.json()
 });
 
 one.post((req, res) => {
@@ -34,4 +31,4 @@ one.delete((req, res) => {
 
 
 
-export { router as userRouter };
+export { router as singleUserRouter };

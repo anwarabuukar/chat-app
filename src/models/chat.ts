@@ -10,7 +10,6 @@ export const CHAT_STATUS = {
 const chatshema = new Schema({
     title:{
         type: String,
-        required: true,
     },
     status:{
         type: String,

@@ -13,7 +13,7 @@ router.post("/login", async (req, res) => {
 if(!req.body.username || !req.body.password){
    return  res.status(400).json("Username and password are required");
 }
-const User  =  await user.findOne({username: req.body.username});
+const User  =  await user.findOne({username: req.body.username}).select("+password");
 if (!User) {
   return res.status(400).json("connot log in  you need to register first");
 }
