@@ -1,6 +1,20 @@
 import { Schema, Types, model } from "mongoose";
 import { CHAT_MODEL, USER_MODEL } from "./constent";
 import { hash, compare } from "bcrypt";
+import { type } from "node:os";
+
+ export  interface Usertype{
+name: string,
+username: string,
+password: string,
+email: string,
+verified : boolean,
+dataofbirth?: Date,
+chats: Types.ObjectId[],
+friends:Types.ObjectId[]
+}
+
+export type UpdateUserBody = Pick<Usertype, "name"| "username" |"dataofbirth">
 
 const userschema = new Schema({
   name: {
@@ -10,7 +24,7 @@ const userschema = new Schema({
   username: {
     type: String,
     required: true,
-    unique: true,
+    unique: [true, "username taken"]
   },
   password: {
     type: String,
@@ -20,7 +34,7 @@ const userschema = new Schema({
   email: {
     type: String,
     required: true,
-    unique: true,
+    unique: [true, "email taken"]
   },
   verified: {
     type: Boolean,
@@ -31,12 +45,14 @@ const userschema = new Schema({
     {
       type: Types.ObjectId,
       ref: USER_MODEL,
+      select: false,
     },
   ],
   chats: [
     {
       type: Types.ObjectId,
       ref: CHAT_MODEL,
+      select: false,
     },
   ],
 }, {
